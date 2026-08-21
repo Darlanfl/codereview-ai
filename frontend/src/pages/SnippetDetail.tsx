@@ -74,23 +74,23 @@ function SnippetDetail() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-                <p className="text-slate-400">Carregando...</p>
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <p className="text-zinc-400">Carregando...</p>
             </div>
         );
     }
 
     if (!snippet) {
         return (
-            <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-                <p className="text-slate-400">Snippet não encontrado.</p>
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <p className="text-zinc-400">Snippet não encontrado.</p>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-slate-900">
-            <header className="border-b border-slate-800 px-6 py-4">
+        <div className="min-h-screen bg-black">
+            <header className="border-b border-zinc-900 px-6 py-4">
                 <Link to="/" className="text-emerald-400 text-sm hover:underline">
                     ← Voltar para o feed
                 </Link>
@@ -99,20 +99,20 @@ function SnippetDetail() {
             <main className="max-w-2xl mx-auto px-4 py-8 space-y-6">
                 <SnippetCard snippet={snippet} />
 
-                <div className="bg-slate-800 rounded-xl p-5">
+                <div className="bg-zinc-900 rounded-xl p-5">
                     <h2 className="text-white font-semibold mb-4">
                         Comentários ({comments.length})
                     </h2>
 
                     <div className="space-y-3 mb-4">
                         {comments.length === 0 && (
-                            <p className="text-slate-400 text-sm">Nenhum comentário ainda. Seja o primeiro!</p>
+                            <p className="text-zinc-400 text-sm">Nenhum comentário ainda. Seja o primeiro!</p>
                         )}
 
                         {comments.map((comment) => (
-                            <div key={comment.id} className="bg-slate-900 rounded-lg p-3">
+                            <div key={comment.id} className="bg-black rounded-lg p-3">
                                 <p className="text-emerald-400 text-sm font-medium">{comment.User.name}</p>
-                                <p className="text-slate-300 text-sm mt-1">{comment.content}</p>
+                                <p className="text-zinc-300 text-sm mt-1">{comment.content}</p>
                             </div>
                         ))}
                     </div>
@@ -124,18 +124,18 @@ function SnippetDetail() {
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
                                 placeholder="Escreva um comentário..."
-                                className="flex-1 bg-slate-700 text-white rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400 text-sm"
+                                className="flex-1 bg-zinc-800 text-white rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400 text-sm"
                             />
                             <button
                                 type="submit"
                                 disabled={sending}
-                                className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold rounded-lg px-4 py-2 text-sm transition disabled:opacity-50"
+                                className="bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-lg px-4 py-2 text-sm transition disabled:opacity-50"
                             >
                                 {sending ? '...' : 'Enviar'}
                             </button>
                         </form>
                     ) : (
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-zinc-400 text-sm">
                             <Link to="/login" className="text-emerald-400 hover:underline">
                                 Faça login
                             </Link>{' '}

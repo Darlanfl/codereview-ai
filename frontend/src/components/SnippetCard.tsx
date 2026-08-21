@@ -23,12 +23,12 @@ function SnippetCard({ snippet }: { snippet: Snippet }) {
     return (
         <Link
             to={`/snippet/${snippet.id}`}
-            className="block bg-slate-800 rounded-xl p-5 space-y-3 hover:bg-slate-750 transition cursor-pointer"
+            className="block bg-zinc-900 rounded-xl p-5 space-y-3 hover:bg-zinc-800 transition cursor-pointer"
         >
             <div className="flex items-start justify-between">
                 <div>
                     <h3 className="text-white font-semibold text-lg">{snippet.title}</h3>
-                    <p className="text-slate-400 text-sm">
+                    <p className="text-zinc-400 text-sm">
                         por {snippet.User.name} · {snippet.language}
                     </p>
                 </div>
@@ -39,7 +39,7 @@ function SnippetCard({ snippet }: { snippet: Snippet }) {
             </div>
 
             {snippet.description && (
-                <p className="text-slate-300 text-sm">{snippet.description}</p>
+                <p className="text-zinc-300 text-sm">{snippet.description}</p>
             )}
 
             <pre className="bg-slate-950 text-slate-200 text-sm rounded-lg p-3 overflow-x-auto">
@@ -47,17 +47,17 @@ function SnippetCard({ snippet }: { snippet: Snippet }) {
             </pre>
 
             {snippet.aiStatus === 'concluido' && snippet.aiFeedback && (
-                <div className="bg-slate-900 rounded-lg p-4 space-y-2 border border-slate-700">
+                <div className="bg-black rounded-lg p-4 space-y-2 border border-zinc-800">
                     <div className="flex items-center gap-2">
-                        <span className="text-slate-400 text-sm">Score de qualidade:</span>
+                        <span className="text-zinc-400 text-sm">Score de qualidade:</span>
                         <span className={`font-bold text-lg ${scoreColor(snippet.aiScore ?? 0)}`}>
                             {snippet.aiScore}/100
                         </span>
                     </div>
 
                     <div>
-                        <p className="text-slate-400 text-sm font-medium mb-1">✅ Pontos fortes</p>
-                        <ul className="text-slate-300 text-sm list-disc list-inside space-y-0.5">
+                        <p className="text-zinc-400 text-sm font-medium mb-1">✅ Pontos fortes</p>
+                        <ul className="text-zinc-300 text-sm list-disc list-inside space-y-0.5">
                             {snippet.aiFeedback.pontos_fortes.map((item, i) => (
                                 <li key={i}>{item}</li>
                             ))}
@@ -65,8 +65,8 @@ function SnippetCard({ snippet }: { snippet: Snippet }) {
                     </div>
 
                     <div>
-                        <p className="text-slate-400 text-sm font-medium mb-1">💡 Sugestões</p>
-                        <ul className="text-slate-300 text-sm list-disc list-inside space-y-0.5">
+                        <p className="text-zinc-400 text-sm font-medium mb-1">💡 Sugestões</p>
+                        <ul className="text-zinc-300 text-sm list-disc list-inside space-y-0.5">
                             {snippet.aiFeedback.sugestoes.map((item, i) => (
                                 <li key={i}>{item}</li>
                             ))}

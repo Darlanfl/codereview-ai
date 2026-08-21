@@ -41,42 +41,50 @@ function Feed() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-slate-900">
-            <header className="border-b border-slate-800 px-6 py-4 flex items-center justify-between">
-                <h1 className="text-xl font-bold text-white">
-                    CodeReview <span className="text-emerald-400">AI</span>
-                </h1>
+        <div className="min-h-screen bg-black">
+            <header className="border-b border-zinc-800 px-6 py-4 flex items-center justify-between bg-black/50 backdrop-blur-sm sticky top-0 z-10">
+                <div className="flex items-center gap-3">
+                    <span className="font-mono text-xl text-white">
+                        <span className="text-emerald-400">&gt;</span> CodeReview
+                        <span className="animate-pulse text-emerald-400 font-bold inline-block">_AI_</span>
+                    </span>
+                </div>
 
                 <div className="flex items-center gap-4">
+                    <span className="hidden sm:flex items-center gap-1.5 text-xs text-zinc-500 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        IA online
+                    </span>
+
                     {user ? (
                         <>
                             <Link
                                 to="/new"
-                                className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold rounded-lg px-4 py-2 text-sm transition"
+                                className="bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-lg px-4 py-2 text-sm transition font-mono"
                             >
-                                + Novo Snippet
+                                + novo_snippet
                             </Link>
-                            <span className="text-slate-300 text-sm">Olá, {user.name}</span>
+                            <span className="text-zinc-400 text-sm font-mono">~/{user.name.toLowerCase().split(' ')[0]}</span>
                             <button
                                 onClick={logout}
-                                className="text-slate-400 hover:text-white text-sm"
+                                className="text-zinc-500 hover:text-white text-sm font-mono"
                             >
-                                Sair
+                                exit
                             </button>
                         </>
                     ) : (
-                        <Link to="/login" className="text-emerald-400 text-sm hover:underline">
-                            Entrar
+                        <Link to="/login" className="text-emerald-400 text-sm hover:underline font-mono">
+                            login
                         </Link>
                     )}
                 </div>
             </header>
 
             <main className="max-w-2xl mx-auto px-4 py-8 space-y-4">
-                {loading && <p className="text-slate-400">Carregando snippets...</p>}
+                {loading && <p className="text-zinc-400">Carregando snippets...</p>}
 
                 {!loading && snippets.length === 0 && (
-                    <p className="text-slate-400">Nenhum snippet postado ainda.</p>
+                    <p className="text-zinc-400">Nenhum snippet postado ainda.</p>
                 )}
 
                 {snippets.map((snippet) => (
