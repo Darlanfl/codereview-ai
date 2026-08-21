@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Feed from './pages/Feed'
 import NewSnippet from './pages/NewSnippet'
+import SnippetDetail from './pages/SnippetDetail'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/new" element={<NewSnippet />} />
+      <Route path="/snippet/:id" element={<SnippetDetail />} />
     </Routes>
   )
 }

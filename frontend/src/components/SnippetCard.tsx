@@ -1,4 +1,5 @@
 import type { Snippet } from '../types/snippet';
+import { Link } from 'react-router-dom';
 
 function statusBadge(status: Snippet['aiStatus']) {
     const map = {
@@ -20,7 +21,10 @@ function SnippetCard({ snippet }: { snippet: Snippet }) {
     const badge = statusBadge(snippet.aiStatus);
 
     return (
-        <div className="bg-slate-800 rounded-xl p-5 space-y-3">
+        <Link
+            to={`/snippet/${snippet.id}`}
+            className="block bg-slate-800 rounded-xl p-5 space-y-3 hover:bg-slate-750 transition cursor-pointer"
+        >
             <div className="flex items-start justify-between">
                 <div>
                     <h3 className="text-white font-semibold text-lg">{snippet.title}</h3>
@@ -70,7 +74,7 @@ function SnippetCard({ snippet }: { snippet: Snippet }) {
                     </div>
                 </div>
             )}
-        </div>
+        </Link>
     );
 }
 

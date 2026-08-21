@@ -6,20 +6,21 @@ require('dotenv').config();
 const sequelize = require('./config/database');
 const User = require('./models/User');
 const Snippet = require('./models/Snippet');
+const Comment = require('./models/Comment');
 
 const authRoutes = require('./routes/authRoutes');
 const snippetRoutes = require('./routes/snippetRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 
 const app = express();
-const server = http.createServer(app); // servidor HTTP "cru", por trás do Express
+const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:5173', // endereço do seu frontend
+        origin: 'http://localhost:5173',
     },
 });
 
-// Deixa o "io" acessível dentro dos controllers
 app.set('io', io);
 
 app.use(cors());
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/snippets', snippetRoutes);
+app.use('/api/comments', commentRoutes);
 
 io.on('connection', (socket) => {
     console.log('🔌 Cliente conectado:', socket.id);
@@ -49,7 +51,7 @@ sequelize.authenticate()
     })
     .then(() => {
         console.log('📦 Tabelas sincronizadas!');
-        server.listen(PORT, () => { // repare: agora é "server.listen", não mais "app.listen"
+        server.listen(PORT, () => {
             console.log(`🚀 Servidor rodando na porta ${PORT}`);
         });
     })
