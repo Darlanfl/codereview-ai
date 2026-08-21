@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
+import socket from '../services/socket';
 import { useAuth } from '../contexts/AuthContext';
 import SnippetCard from '../components/SnippetCard';
 import type { Snippet } from '../types/snippet';
@@ -23,6 +24,20 @@ function Feed() {
 
     useEffect(() => {
         loadSnippets();
+
+        function handleUpdate(updatedSnippet: Snippet) {
+            setSnippets((prev) =>
+                prev.map((s) =>
+                    s.id === updatedSnippet.id ? { ...s, ...updatedSnippet } : s
+                )
+            );
+        }
+
+        socket.on('snippet:updated', handleUpdate);
+
+        return () => {
+            socket.off('snippet:updated', handleUpdate);
+        };
     }, []);
 
     return (
