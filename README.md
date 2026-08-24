@@ -4,7 +4,7 @@ Plataforma onde desenvolvedores compartilham trechos de código e recebem análi
 
 ## 🎯 Motivação
 
-Projeto criado para explorar a integração de LLMs em aplicações reais, indo além de simples chamadas de chat — aqui a IA atua como um "revisor de código" automatizado, com respostas estruturadas e processamento assíncrono em background. É meu primeiro projeto full-stack como recém-formado, em transição de carreira para desenvolvimento.
+Projeto criado para explorar a integração de LLMs em aplicações reais, indo além de simples chamadas de chat — aqui a IA atua como um "revisor de código" automatizado, com respostas estruturadas e processamento assíncrono em background. 
 
 ## 📸 Demonstração
 
