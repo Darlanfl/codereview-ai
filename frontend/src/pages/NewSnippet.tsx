@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import MatrixRain from '../components/MatrixRain';
 
 const LANGUAGES = ['javascript', 'typescript', 'python', 'java', 'csharp', 'php', 'go', 'other'];
 
@@ -30,11 +31,15 @@ function NewSnippet() {
     }
 
     return (
-        <div className="min-h-screen bg-black px-4 py-8">
-            <div className="max-w-2xl mx-auto">
-                <h1 className="text-2xl font-bold text-white mb-6">Novo Snippet</h1>
+        <div className="min-h-screen bg-black relative overflow-hidden px-4 py-8">
+            <MatrixRain />
 
-                <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-xl p-6 space-y-4">
+            <div className="relative z-10 max-w-2xl mx-auto">
+                <h1 className="font-mono text-2xl text-white mb-6">
+                    <span className="text-emerald-400">&gt;</span> novo_snippet
+                </h1>
+
+                <form onSubmit={handleSubmit} className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4">
                     <div>
                         <label className="block text-zinc-300 text-sm mb-1">Título</label>
                         <input
@@ -78,7 +83,7 @@ function NewSnippet() {
                             onChange={(e) => setCode(e.target.value)}
                             required
                             rows={10}
-                            className="w-full bg-zinc-950 text-slate-200 font-mono text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400"
+                            className="w-full bg-black text-zinc-200 font-mono text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400 border border-zinc-800"
                             placeholder="Cole seu código aqui..."
                         />
                     </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import MatrixRain from '../components/MatrixRain';
 
 function Register() {
     const [name, setName] = useState('');
@@ -28,13 +29,16 @@ function Register() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center px-4">
-            <div className="w-full max-w-sm">
-                <h1 className="text-3xl font-bold text-white mb-8 text-center">
-                    CodeReview <span className="text-emerald-400">AI</span>
+        <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center px-4">
+            <MatrixRain />
+
+            <div className="relative z-10 w-full max-w-sm">
+                <h1 className="font-mono text-3xl text-white mb-8 text-center">
+                    <span className="text-emerald-400">&gt;</span> CodeReview_
+                    <span className="text-emerald-400 font-bold">AI</span>
                 </h1>
 
-                <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-xl p-6 space-y-4">
+                <form onSubmit={handleSubmit} className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4">
                     <div>
                         <label className="block text-zinc-300 text-sm mb-1">Nome</label>
                         <input
