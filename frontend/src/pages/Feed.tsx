@@ -5,11 +5,13 @@ import socket from '../services/socket';
 import { useAuth } from '../contexts/AuthContext';
 import SnippetCard from '../components/SnippetCard';
 import MatrixRain from '../components/MatrixRain';
+import ScoreToastContainer, { type ToastData } from '../components/ScoreToastContainer';
 import type { Snippet } from '../types/snippet';
 
 function Feed() {
     const [snippets, setSnippets] = useState<Snippet[]>([]);
     const [loading, setLoading] = useState(true);
+    const [toasts, setToasts] = useState<ToastData[]>([]);
     const { user, logout } = useAuth();
 
     async function loadSnippets() {
@@ -23,15 +25,53 @@ function Feed() {
         }
     }
 
+    function closeToast(id: number) {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+    }
+
     useEffect(() => {
         loadSnippets();
 
         function handleUpdate(updatedSnippet: Snippet) {
-            setSnippets((prev) =>
-                prev.map((s) =>
-                    s.id === updatedSnippet.id ? { ...s, ...updatedSnippet } : s
-                )
-            );
+            setSnippets((prev) => {
+                const existing = prev.find((s) => s.id === updatedSnippet.id);
+
+                // Dispara o toast somente na transição para "concluido"
+                if (
+                    updatedSnippet.aiStatus === 'concluido' &&
+                    existing?.aiStatus !== 'concluido' &&
+                    typeof updatedSnippet.aiScore === 'number'
+                ) {
+                    setToasts((prevToasts) => {
+                        // Evita adicionar o mesmo toast duas vezes
+                        if (
+                            prevToasts.some(
+                                (toast) => toast.id === updatedSnippet.id
+                            )
+                        ) {
+                            return prevToasts;
+                        }
+
+                        return [
+                            ...prevToasts,
+                            {
+                                id: updatedSnippet.id,
+                                title:
+                                    updatedSnippet.title ||
+                                    existing?.title ||
+                                    'Snippet',
+                                score: updatedSnippet.aiScore as number,
+                            },
+                        ];
+                    });
+                }
+
+                return prev.map((s) =>
+                    s.id === updatedSnippet.id
+                        ? { ...s, ...updatedSnippet }
+                        : s
+                );
+            });
         }
 
         socket.on('snippet:updated', handleUpdate);
@@ -46,12 +86,19 @@ function Feed() {
             {/* Efeito Matrix: chuva de código binário */}
             <MatrixRain />
 
+            {/* Toasts de score, flutuando por cima de tudo */}
+            <ScoreToastContainer
+                toasts={toasts}
+                onClose={closeToast}
+            />
+
             {/* Conteúdo real, por cima do efeito */}
             <div className="relative z-10">
                 <header className="border-b border-zinc-800 px-6 py-4 flex items-center justify-between bg-black/50 backdrop-blur-sm sticky top-0 z-10">
                     <div className="flex items-center gap-3">
                         <span className="font-mono text-xl text-white">
-                            <span className="text-emerald-400">&gt;</span> CodeReview_
+                            <span className="text-emerald-400">&gt;</span>{' '}
+                            CodeReview_
                             <span className="animate-pulse text-emerald-400 font-bold inline-block">
                                 AI
                             </span>
@@ -72,9 +119,11 @@ function Feed() {
                                 >
                                     + novo_snippet
                                 </Link>
+
                                 <span className="text-zinc-400 text-sm font-mono">
                                     ~/{user.name.toLowerCase().split(' ')[0]}
                                 </span>
+
                                 <button
                                     onClick={logout}
                                     className="text-zinc-500 hover:text-white text-sm font-mono"
@@ -94,14 +143,23 @@ function Feed() {
                 </header>
 
                 <main className="max-w-2xl mx-auto px-4 py-8 space-y-4">
-                    {loading && <p className="text-zinc-400">Carregando snippets...</p>}
+                    {loading && (
+                        <p className="text-zinc-400">
+                            Carregando snippets...
+                        </p>
+                    )}
 
                     {!loading && snippets.length === 0 && (
-                        <p className="text-zinc-400">Nenhum snippet postado ainda.</p>
+                        <p className="text-zinc-400">
+                            Nenhum snippet postado ainda.
+                        </p>
                     )}
 
                     {snippets.map((snippet) => (
-                        <SnippetCard key={snippet.id} snippet={snippet} />
+                        <SnippetCard
+                            key={snippet.id}
+                            snippet={snippet}
+                        />
                     ))}
                 </main>
             </div>
